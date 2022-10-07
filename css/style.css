@@ -6,3 +6,8 @@ body{
 .contenedor{
     height: 33vh;
 }
+
+a{
+    text-decoration: none;
+    color: white;
+}
