@@ -65,6 +65,21 @@ const VerUsers = () =>{
   console.log(sessionStorage.getItem("second"))
 }
 
+
+const ModificarLabel = label => {
+  document.getElementById(label).innerHTML="Es tu turno te quedan 3"
+}
+
+const setNames = () => {
+  user = sessionStorage.getItem("first")
+  user2 = sessionStorage.getItem("second")
+  document.getElementById("player1Name").innerHTML = user
+  document.getElementById("player2Name").innerHTML = user2
+  
+
+}
+
+
 // const Formar = (usuario1,usuario2) => {
 //   let usuari1 = {"name":usuario1 , "turnos":3 };
 //   let usuari2 = {"name":usuario2 , "turnos":3};

@@ -68,10 +68,10 @@
                 <div class="row">
                     <div class="col">
                         <div class="container text-white">
-                            Player 1 turn:
+                            <label for="" id="player1Name"></label>
                         </div>
                         <div class="card text-center">
-                            Es tu turno
+                            <label for="" id="player1Turn"> Turno: </label>
                         </div>
                     </div>
                 </div>
@@ -79,11 +79,10 @@
                 <div class="row">
                     <div class="col">
                         <div class="container text-white">
-                            Player 2 turn:
+                            <label for="" id="player2Name"></label>
                         </div>
                         <div class="card text-center">
-                            No es tu turno
-                            
+                            <label for="" id="player2Turn"> Turno: </label>
                         </div>
                         
                     </div>
@@ -92,6 +91,8 @@
                 
                 <a href="./pruebas.html">Atras</a>
                 <button onclick="VerUsers()" >mostrar</button>
+                <button onclick="ModificarLabel('player1Turn')">Turno</button>
+                <button onclick="setNames()">Names</button>
 
             </div>
         
