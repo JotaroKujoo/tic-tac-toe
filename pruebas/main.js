@@ -1,4 +1,62 @@
 
+
+
+
+
+
+
+
+
+
+
+/*
+
+
+  -Requerimientos para el tic tac toe
+    Vista principal con boton para iniciar
+    Pasar a vista de seleccion de jugadores
+      2 input para los nombres de los jugadores
+      radios para humano o cpu 
+      boton para comenzar
+    Pasar los datos a sessionStorage 
+    Abrir la vista del tablero
+      Tablero con 9 casillas
+      Una barra lateral con la informacion de los jugadores y el turno del juego
+        Variable para el turno / usuario
+      COMENZAR JUEGO
+        Al pulsar en una casilla se marca con su simbolo 
+        Cada jugador solo puede  tener 3 fichas en el tablero
+        cuando estan todas las fichas solo se pueden mover de posicion
+        al colocar una ficha, controlar que la casilla este vacia
+        a partir del 5 turno comprobar al final del todo la victoria
+          comprobar si tienen el mismo simbolo
+            0 1 2
+            3 4 5
+            6 7 8
+            0 3 6
+            1 4 7
+            2 5 8
+            0 4 8
+            2 4 6
+          si ha ganado uno de los 2 se notifica
+        si esta la cpu
+          si el centro esta vacio, lo ocupa
+          si no, hacer random para obtener una aleatoria
+          si el random devuelve una casilla ocupada. que repita hasta conseguir una vacia 
+
+
+*/
+
+
+
+
+
+
+
+
+
+
+
 // OnKeyUp Event and Syntax
 // Eventos "Cuando escribas" y su sintaxis
 
