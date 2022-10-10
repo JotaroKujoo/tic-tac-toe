@@ -17,61 +17,56 @@
             <div class="container  w-100 h-75 border-3 border border-white ">
 
 
-                <div class="row h-100 ">
+                <div class="row d-flex justify-content-center  h-100 ">
 
 
-                    <div class="col-4 text-center">
-                        <div class="row h-25 d-flex justify-content-center align-items-center fs">Player vs CPU</div>
-                        <div class="row h-75  ">
+                    <div class="col-5 text-center">
+
+                        <div class="row mb-3 d-block ">
+
+
+                            
+                            <div class="col">
+                                <input  class="radio" type="radio" id="PlayerVsCPU" name="option" value="PlayerVsCPU">
+                                <label for="PlayerVsCPU"> Player vs CPU</label>
+                            </div>
+                            <div class="col">
+                                <input class="radio" type="radio" id="CPUvsPlayer" name="option" value="CPUvsPlayer">
+                                <label for="CPUvsPlayer"> CPU vs Player</label>
+                            </div>
+                            <div class="col">
+                                <input class="radio" type="radio" id="PlayerVsPlayer" name="option" value="PlayerVsPlayer">
+                                <label for="PlayerVsPlayer"> Player vs Player</label>
+                            </div>
+
+
+
+                        </div>
+
+
+                        <div class="row">
+
+
                             <div class="container">
                                 <div class="mb-3">
-                                  <label for="user1" class="form-label">Name Player</label>
+                                  <label for="user1" id="firstPlayer" class="form-label">Name Player</label>
                                   <input  class="form-control" id="user1"  aria-describedby="emailHelp">
                                 </div>
                                 <div class="mb-3">
-                                  <label for="CPU" class="form-label">Name the CPU</label>
-                                  <input  class="form-control" id="CPU">
+                                  <label for="CPU" id="secondPlayer" class="form-label">Name CPU</label>
+                                  <input  class="form-control" id="user2">
                                 </div>
-                                <button type="submit" class="container-fluid btn btn-secondary" ><a href="./game.html" onclick="Mostrar(getUser(),getCPU())">Start</a></button>
+                                <button type="submit" id="saveButton" class="container-fluid btn btn-secondary" ><a href="./game.html" onclick="Mostrar(getUser(),getCPU())">Start</a></button>
                             </div>
+
+
                         </div>
+
+
                     </div>
 
 
-                    <div class="col-4 text-center">
-                        <div class="row h-25 d-flex justify-content-center align-items-center">CPU vs Player</div>
-                        <div class="row h-75   ">
-                            <div class="container">
-                                <div class="mb-3">
-                                  <label for="exampleInputEmail1" class="form-label">Name the CPU</label>
-                                  <input  class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                                </div>
-                                <div class="mb-3">
-                                  <label for="exampleInputPassword1" class="form-label">Name Player</label>
-                                  <input  class="form-control" id="exampleInputPassword1">
-                                </div>
-                                <button type="submit" class="container-fluid btn btn-secondary"><a href="./game.html">Start</a></button>
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <div class="col-4 text-center">
-                        <div class="row h-25 d-flex justify-content-center align-items-center">Player vs Player</div>
-                        <div class="row h-75  ">
-                            <div class="container">
-                                <div class="mb-3 ">
-                                  <label for="exampleInputEmail1" class="form-label">Name Player1 </label>
-                                  <input  class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                                </div>
-                                <div class="mb-3 ">
-                                  <label for="exampleInputPassword1" class="form-label">Name Player2 </label>
-                                  <input  class="form-control" id="exampleInputPassword1">
-                                </div>
-                                <button type="submit" class="container-fluid btn btn-secondary"><a href="./game.html">Start</a></button>
-                            </div>
-                        </div>
-                    </div>
+                    
 
 
                 </div>
