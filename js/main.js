@@ -4,6 +4,27 @@
 //OBTENEMOS LOS USUARIOS
 
 
+const saveButtons = Array.from(document.getElementsByClassName("safeButt"));
+
+saveButtons.map((button)=>{
+  button.addEventListener("click",()=>{
+    user1 = getUser();
+    user2 = getUser2();
+    sessionStorage.setItem("first",user1)
+    sessionStorage.setItem("second",user2)
+
+  })
+})
+
+
+
+
+
+
+
+
+
+
 const getUser = () => {
     let inputValue = document.getElementById("user1").value;
     return inputValue
@@ -17,22 +38,16 @@ const getUser2 = () => {
   
 
 
-const saveUsers = (user1,user2) => {
-  sessionStorage.setItem("first",user1)
-  sessionStorage.setItem("second",user2)
-}
+
+
+
+
 
 const gameModeValidate = (gamemode, gamemodevalue) => {
   if (gamemode) {
     sessionStorage.setItem("gamemode",gamemodevalue)
   }
 }
-
-const buttonSave = document.getElementById("saveButton")
-
-buttonSave.addEventListener("click",saveUsers(getUser(),getUser2()))
-  
-
 
 
 
