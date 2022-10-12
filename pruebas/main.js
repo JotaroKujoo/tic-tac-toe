@@ -67,9 +67,9 @@
 // function myKeyUpFunction() {
 
 //     let input = document.getElementById("firstname").value;
-  
+
 //     document.getElementById("Test").innerHTML = input;
-  
+
 //   }
 
 
@@ -88,54 +88,7 @@
 // console.log(typeof newJson)
 
 
-const getUser = () => {
-  let inputValue = document.getElementById("user1").value;
-  return inputValue
 
-}
-
-
-const getCPU = () => {
-  let inputValue = document.getElementById("CPU").value;
-  return inputValue 
-}
-
-
-
-
-const Mostrar = (usuario) => {
-  console.log(usuario)
-}
-
-
-const Formar = (user, user2) => {
-  sessionStorage.setItem("first", user);
-  sessionStorage.setItem("second",user2);
-  let data = [sessionStorage.getItem("first")]
-  data.push(sessionStorage.getItem("second"))
-  console.log(data)
-  return data
-}
-
-
-const VerUsers = () =>{
-  console.log(sessionStorage.getItem("first"))
-  console.log(sessionStorage.getItem("second"))
-}
-
-
-const ModificarLabel = label => {
-  document.getElementById(label).innerHTML="Es tu turno te quedan 3"
-}
-
-const setNames = () => {
-  user = sessionStorage.getItem("first")
-  user2 = sessionStorage.getItem("second")
-  document.getElementById("player1Name").innerHTML = user
-  document.getElementById("player2Name").innerHTML = user2
-  
-
-}
 
 
 // const Formar = (usuario1,usuario2) => {
@@ -157,4 +110,173 @@ const setNames = () => {
 //   // class Luchador{
 //   //   constructor(nombre,vida = 100,)
 //   // }
+
+
+
+
+class GameMode {
+  constructor(gamemode, user1, user2) {
+
+    this.gamemode = gamemode
+    this.user1 = user1
+    this.user2 = user2
+  }
+
+
+
+  getGameModeFromHTML() {
+
+
+    let opciones = Array.from(document.getElementsByClassName("radio"))
+
+    opciones.map((opcion) => {
+      opcion.addEventListener("click", () => {
+        switch (opcion.value) {
+          case "PlayerVsCPU":
+            document.getElementById("firstPlayer").innerHTML = "Name Player"
+            document.getElementById("secondPlayer").innerHTML = "Name CPU"
+            this.gamemode = "PlayerVsCPU"
+            sessionStorage.setItem("gamemode", this.gamemode)
+            console.log(sessionStorage.getItem("gamemode"))
+            break;
+          case "CPUvsPlayer":
+            document.getElementById("firstPlayer").innerHTML = "Name CPU"
+            document.getElementById("secondPlayer").innerHTML = "Name Player"
+            this.gamemode = "CPUvsPlayer"
+            sessionStorage.setItem("gamemode", this.gamemode)
+            console.log(sessionStorage.getItem("gamemode"))
+            break;
+          case "PlayerVsPlayer":
+            document.getElementById("firstPlayer").innerHTML = "Name Player"
+            document.getElementById("secondPlayer").innerHTML = "Name Player 2"
+            this.gamemode = "PlayerVsPlayer"
+            sessionStorage.setItem("gamemode", this.gamemode)
+            console.log(sessionStorage.getItem("gamemode"))
+            break;
+
+        }
+      })
+    })
+
+
+  }
+
+
+  getUsers() {
+    const saveButtons = Array.from(document.getElementsByClassName("safeButt"));
+
+    saveButtons.map((button) => {
+      button.addEventListener("click", () => {
+        this.user1 = document.getElementById("user1").value;
+        this.user2 = document.getElementById("user2").value;
+        sessionStorage.setItem("first", this.user1)
+        sessionStorage.setItem("second", this.user2)
+
+      })
+    })
+  }
+
+
+}
+
+let modo = new GameMode();
+
+modo.getGameModeFromHTML()
+
+modo.getUsers()
+
+
+
+class Game{
+  constructor(user1,user2,gamemode,casillas,fichas1=3,fichas2=3,interruptor=true){
+    this.user1 = user1;
+    this.user2 = user2;
+    this.gamemode = gamemode
+    this.casillas = casillas
+    this.fichas1 = fichas1
+    this.fichas2 = fichas2
+    this.interruptor = interruptor
+  }
+
+  StartGame(){
+    this.casillas = Array.from(document.getElementsByClassName("celda"))
+    this.casillas.map((casilla)=>{
+      casilla.addEventListener("click",()=>{
+        if ( this.fichas1>0 || this.fichas2 > 0 ){
+          if(casilla.innerHTML == "."){
+            casilla.innerHTML = (this.interruptor) ? "X" : "O"
+            this.interruptor = !this.interruptor
+            if(casilla.innerHTML=="X"){
+              console.log("Turno para X")
+              this.fichas1 -= 1
+              console.log(this.fichas1,"fichas te quedan")
+            }
+            if (casilla.innerHTML == "O"){
+              console.log("Turno para O")
+              this.fichas2 -=1
+              console.log(this.fichas2,"fichas te quedan")
+            }
+
+
+          }
+        }
+      })
+    })
+  }
+
+
+}
+
+let tictac = new Game()
+
+tictac.StartGame()
+
+
+// let fichasUser1 = 3
+// let fichasUser2 = 3
+
+// let interruptor = false;
+
+
+
+// let casillas = Array.from(document.getElementsByClassName("celda"))
+
+// casillas.map((casilla) => {
+
+
+//   casilla.addEventListener("click", () => {
+//     if (fichasUser1 > 0 || fichasUser2 > 0){
+//       if (casilla.innerHTML == "") {
+//         casilla.innerHTML = (interruptor) ? "X" : "O"
+//         interruptor = !interruptor
+//         console.log("Funciono2")
+//         if (casilla.innerHTML == "X") {
+//           console.log("Turno para X")
+//           fichasUser1 -= 1
+//           console.log(fichasUser1, "fichas te quedan")
+          
+  
+  
+//         }
+//         if (casilla.innerHTML == "O") {
+//           console.log("Turno para O")
+//           fichasUser2 -= 1
+//           console.log(fichasUser2, "fichas te quedan")
+          
+  
+//         }
+  
+//       }
+
+
+//     }
+    
+
+    
+//   })
+
+
+
+// }
+// )
 
