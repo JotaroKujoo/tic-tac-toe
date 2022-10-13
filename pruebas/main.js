@@ -113,6 +113,7 @@
 
 
 
+//          ESTABLECEMOS USUARIOS Y MODO DE JUEGO
 
 class GameMode {
   constructor(gamemode, user1, user2) {
@@ -123,9 +124,7 @@ class GameMode {
   }
 
 
-
   getGameModeFromHTML() {
-
 
     let opciones = Array.from(document.getElementsByClassName("radio"))
 
@@ -137,28 +136,25 @@ class GameMode {
             document.getElementById("secondPlayer").innerHTML = "Name CPU"
             this.gamemode = "PlayerVsCPU"
             sessionStorage.setItem("gamemode", this.gamemode)
-            console.log(sessionStorage.getItem("gamemode"))
+            // console.log(sessionStorage.getItem("gamemode"))
             break;
           case "CPUvsPlayer":
             document.getElementById("firstPlayer").innerHTML = "Name CPU"
             document.getElementById("secondPlayer").innerHTML = "Name Player"
             this.gamemode = "CPUvsPlayer"
             sessionStorage.setItem("gamemode", this.gamemode)
-            console.log(sessionStorage.getItem("gamemode"))
+            // console.log(sessionStorage.getItem("gamemode"))
             break;
           case "PlayerVsPlayer":
             document.getElementById("firstPlayer").innerHTML = "Name Player"
             document.getElementById("secondPlayer").innerHTML = "Name Player 2"
             this.gamemode = "PlayerVsPlayer"
             sessionStorage.setItem("gamemode", this.gamemode)
-            console.log(sessionStorage.getItem("gamemode"))
+            // console.log(sessionStorage.getItem("gamemode"))
             break;
-
         }
       })
     })
-
-
   }
 
 
@@ -171,12 +167,9 @@ class GameMode {
         this.user2 = document.getElementById("user2").value;
         sessionStorage.setItem("first", this.user1)
         sessionStorage.setItem("second", this.user2)
-
       })
     })
   }
-
-
 }
 
 let modo = new GameMode();
@@ -187,8 +180,17 @@ modo.getUsers()
 
 
 
+
+
+
+
+
+
+
+//        JUEGO TIC TAC TOE 
+
 class Game{
-  constructor(user1,user2,gamemode,casillas,fichas1=3,fichas2=3,interruptor=true){
+  constructor(user1,user2,gamemode,casillas,fichas1=3,fichas2=3,interruptor=false){
     this.user1 = user1;
     this.user2 = user2;
     this.gamemode = gamemode
@@ -204,32 +206,149 @@ class Game{
       casilla.addEventListener("click",()=>{
         if ( this.fichas1>0 || this.fichas2 > 0 ){
           if(casilla.innerHTML == "."){
+            
+            casilla.classList.add("estiloCelda2")
             casilla.innerHTML = (this.interruptor) ? "X" : "O"
             this.interruptor = !this.interruptor
             if(casilla.innerHTML=="X"){
-              console.log("Turno para X")
+              this.cpuMovement()
+              setTimeout(()=>{
+                
+                console.log("Turno para O")},
+                "1000"
+              )
               this.fichas1 -= 1
               console.log(this.fichas1,"fichas te quedan")
+
             }
             if (casilla.innerHTML == "O"){
-              console.log("Turno para O")
+              console.log("Turno para X")
               this.fichas2 -=1
               console.log(this.fichas2,"fichas te quedan")
             }
-
-
           }
         }
       })
     })
   }
 
+   countTurns(){
+    
+    this.casillas.map((casilla)=>{
+      casilla.addEventListener("click",()=>{
+        if (this.interruptor){
+          let rivalTurn = document.getElementById("player2Turn")
+          rivalTurn.innerHTML = "O"
+          let turn = document.getElementById("player1Turn")
+          turn.innerHTML = `<h1>${turn.innerHTML}</h1>`
+          // console.log("Aqui tambien")
+        }else{
+          let rivalTurn = document.getElementById("player1Turn")
+          rivalTurn.innerHTML = "X"
+          let turn = document.getElementById("player2Turn")
+          turn.innerHTML = `<h1>${turn.innerHTML}</h1>`
+          // console.log("funciono")
+          
+        }
+      })
+    })
+  }
+
+  getGameData(){
+    this.user1=sessionStorage.getItem("first")
+    this.user2=sessionStorage.getItem("second")
+    this.gamemode = sessionStorage.getItem("gamemode")
+    let htmlUser1Content = document.getElementById("namePlayer1")
+    let htmlUser2Content = document.getElementById("namePlayer2")
+    htmlUser1Content.innerHTML = this.user1
+    htmlUser2Content.innerHTML = this.user2
+
+    
+  }
+
+  checkVictory(){
+    const winningCombs = [
+      ['0','1','2'],
+      ['3','4','5'],
+      ['6','7','8'],
+      ['0','3','6'],
+      ['1','4','7'],
+      ['2','5','8'],
+      ['0','4','8'],
+      ['2','4','6']
+    ]
+    let xPositions = [];
+    let oPositions = []
+
+    this.casillas.map((casilla)=>{
+      casilla.addEventListener("click",()=>{
+        if (casilla.innerHTML == "X"){
+          xPositions.push(casilla.id)
+          xPositions.sort()
+          console.log(xPositions)
+          winningCombs.forEach((combs,i)=>{
+            
+            console.log(combs,winningCombs[i][i])
+            
+          })
+        }
+        if (casilla.innerHTML=="O"){
+          oPositions.push(casilla.id)
+          oPositions.sort()
+          console.log(oPositions)
+        }
+        
+      })
+
+
+    })
+  }
+
+
+  cpuMovement(){
+    if (this.gamemode == "PlayerVsCPU" || this.gamemode == "CPUvsPlayer"){
+      if (this.fichas2>0 ){
+        
+        let freeCells = this.casillas.filter((celda)=>{
+
+          if(celda.innerHTML=="."){
+           return celda 
+          }
+          
+
+        })
+        let randomChoice = parseInt(Math.random()*freeCells.length)
+          
+            freeCells[randomChoice].click()
+            this.casillas.disabled = true
+            console.log(freeCells)
+          
+          
+        // let randomChoice = parseInt(Math.random() * freeCells.length)
+        // freeCells[randomChoice].click()
+      }
+      
+
+    }
+  }
+
+
+
+
+
+
+
 
 }
 
 let tictac = new Game()
 
+tictac.getGameData()
 tictac.StartGame()
+tictac.checkVictory()
+tictac.countTurns()
+tictac.cpuMovement()
+
 
 
 // let fichasUser1 = 3

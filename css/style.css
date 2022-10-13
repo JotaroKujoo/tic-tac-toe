@@ -8,6 +8,10 @@ body{
     align-items: center;
     justify-content: center;
     cursor: pointer;
+    color: #000;
+}
+.estiloCelda2{
+    color: white;
 }
 
 
@@ -23,3 +27,5 @@ body{
 a{
     text-decoration: none;
 }
+
+
