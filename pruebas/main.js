@@ -211,6 +211,9 @@ class Game{
             casilla.innerHTML = (this.interruptor) ? "X" : "O"
             this.interruptor = !this.interruptor
             if(casilla.innerHTML=="X"){
+              if(this.checkVictory()){
+                console.log("HA GANADO X")
+              }
               this.cpuMovement()
               setTimeout(()=>{
                 
@@ -222,6 +225,10 @@ class Game{
 
             }
             if (casilla.innerHTML == "O"){
+              if(this.checkVictory()){
+                console.log("HA GANADO O")
+                
+              }
               console.log("Turno para X")
               this.fichas2 -=1
               console.log(this.fichas2,"fichas te quedan")
@@ -266,41 +273,49 @@ class Game{
     
   }
 
-  checkVictory(){
-    const winningCombs = [
-      ['0','1','2'],
-      ['3','4','5'],
-      ['6','7','8'],
-      ['0','3','6'],
-      ['1','4','7'],
-      ['2','5','8'],
-      ['0','4','8'],
-      ['2','4','6']
-    ]
-    let xPositions = [];
-    let oPositions = []
+  /* 
+      012
+      345
+      678
+      036
+      147
+      258
+      048
+      246
 
+
+  */
+
+
+  
+  checkVictory(){
+    return (
+      (this.casillas[0].innerHTML != "." && this.casillas[0].innerHTML == this.casillas[1].innerHTML && this.casillas[0].innerHTML == this.casillas[2].innerHTML) ||
+      (this.casillas[3].innerHTML != "." && this.casillas[3].innerHTML == this.casillas[4].innerHTML && this.casillas[3].innerHTML == this.casillas[5].innerHTML) ||
+      (this.casillas[6].innerHTML != "." && this.casillas[6].innerHTML == this.casillas[7].innerHTML && this.casillas[6].innerHTML == this.casillas[8].innerHTML) ||
+      (this.casillas[0].innerHTML != "." && this.casillas[0].innerHTML == this.casillas[3].innerHTML && this.casillas[0].innerHTML == this.casillas[6].innerHTML) ||
+      (this.casillas[1].innerHTML != "." && this.casillas[1].innerHTML == this.casillas[4].innerHTML && this.casillas[1].innerHTML == this.casillas[7].innerHTML) ||
+      (this.casillas[2].innerHTML != "." && this.casillas[2].innerHTML == this.casillas[5].innerHTML && this.casillas[2].innerHTML == this.casillas[8].innerHTML) ||
+      (this.casillas[0].innerHTML != "." && this.casillas[0].innerHTML == this.casillas[4].innerHTML && this.casillas[0].innerHTML == this.casillas[8].innerHTML) ||
+      (this.casillas[2].innerHTML != "." && this.casillas[2].innerHTML == this.casillas[4].innerHTML && this.casillas[2].innerHTML == this.casillas[6].innerHTML)
+      
+    )
+  }
+
+  
+
+  checkWinner(){
     this.casillas.map((casilla)=>{
       casilla.addEventListener("click",()=>{
-        if (casilla.innerHTML == "X"){
-          xPositions.push(casilla.id)
-          xPositions.sort()
-          console.log(xPositions)
-          winningCombs.forEach((combs,i)=>{
-            
-            console.log(combs,winningCombs[i][i])
-            
-          })
+        if (casilla.innerHTML=="X"){
+          
         }
         if (casilla.innerHTML=="O"){
-          oPositions.push(casilla.id)
-          oPositions.sort()
-          console.log(oPositions)
+          if(this.checkVictory()){
+            console.log("HA GANDO O")
+          }
         }
-        
       })
-
-
     })
   }
 
@@ -345,7 +360,7 @@ let tictac = new Game()
 
 tictac.getGameData()
 tictac.StartGame()
-tictac.checkVictory()
+tictac.checkWinner()
 tictac.countTurns()
 tictac.cpuMovement()
 
