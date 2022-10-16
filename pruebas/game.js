@@ -26,8 +26,8 @@ class Game {
                                     this.fichas1 -= 1
                                     if (this.checkVictory("X")) {
                                         console.log("Ha ganado X")
-                                        this.fichas1=0
-                                        this.fichas2=0
+                                        this.fichas1 = 0
+                                        this.fichas2 = 0
                                         break
                                     }
 
@@ -38,8 +38,8 @@ class Game {
                                     this.fichas2 -= 1
                                     if (this.checkVictory("O")) {
                                         console.log("Ha ganado O")
-                                        this.fichas1=0
-                                        this.fichas2=0
+                                        this.fichas1 = 0
+                                        this.fichas2 = 0
                                         break
                                     }
                                 }
@@ -59,8 +59,8 @@ class Game {
                                     this.fichas1 -= 1
                                     if (this.checkVictory("X")) {
                                         console.log("Ha ganado X")
-                                        this.fichas1=0
-                                        this.fichas2=0
+                                        this.fichas1 = 0
+                                        this.fichas2 = 0
                                         break
                                     }
 
@@ -71,8 +71,8 @@ class Game {
                                     this.fichas2 -= 1
                                     if (this.checkVictory("O")) {
                                         console.log("Ha ganado O")
-                                        this.fichas1=0
-                                        this.fichas2=0
+                                        this.fichas1 = 0
+                                        this.fichas2 = 0
                                         break
                                     }
 
@@ -95,8 +95,8 @@ class Game {
                                     this.fichas1 -= 1
                                     if (this.checkVictory("X")) {
                                         console.log("Ha ganado X")
-                                        this.fichas1=0
-                                        this.fichas2=0
+                                        this.fichas1 = 0
+                                        this.fichas2 = 0
                                         break
                                     }
 
@@ -106,8 +106,8 @@ class Game {
                                     this.fichas2 -= 1
                                     if (this.checkVictory("O")) {
                                         console.log("Ha ganado O")
-                                        this.fichas1=0
-                                        this.fichas2=0                                        
+                                        this.fichas1 = 0
+                                        this.fichas2 = 0
                                         break
                                     }
                                 }
@@ -249,3 +249,4 @@ tictac.countTurns()
 if (tictac.gamemode == "CPUvsPlayer") {
     tictac.cpuMovement()
 }
+dragAndDrop()

@@ -14,6 +14,11 @@ class Game {
         this.casillas.map((casilla) => {
             casilla.addEventListener("click", () => {
                 switch (this.gamemode) {
+
+
+//      PLAYER VS CPU
+
+
                     case "PlayerVsCPU":
                         if (this.fichas1 > 0 || this.fichas2 > 0) {
                             if (casilla.innerHTML == ".") {
@@ -26,8 +31,8 @@ class Game {
                                     this.fichas1 -= 1
                                     if (this.checkVictory("X")) {
                                         console.log("Ha ganado X")
-                                        this.fichas1=0
-                                        this.fichas2=0
+                                        sessionStorage.setItem("winner",this.user1)
+                                        this.getWin()
                                         break
                                     }
 
@@ -38,14 +43,33 @@ class Game {
                                     this.fichas2 -= 1
                                     if (this.checkVictory("O")) {
                                         console.log("Ha ganado O")
-                                        this.fichas1=0
-                                        this.fichas2=0
+                                        sessionStorage.setItem("winner",this.user2)
+
+                                        this.getWin()
                                         break
                                     }
                                 }
 
                             }
+                        }else{
+                            this.fichas1=0
+                            this.fichas2=0
                         }
+
+
+                        if (this.fichas1 < 1 && this.fichas2 < 1) {
+                            this.rest()
+                        }
+
+
+
+
+
+
+
+
+//CPU VS PLAYER
+
 
                     case "CPUvsPlayer":
                         if (this.fichas1 > 0 || this.fichas2 > 0) {
@@ -59,8 +83,9 @@ class Game {
                                     this.fichas1 -= 1
                                     if (this.checkVictory("X")) {
                                         console.log("Ha ganado X")
-                                        this.fichas1=0
-                                        this.fichas2=0
+                                        sessionStorage.setItem("winner",this.user1)
+
+                                        this.getWin()
                                         break
                                     }
 
@@ -71,8 +96,9 @@ class Game {
                                     this.fichas2 -= 1
                                     if (this.checkVictory("O")) {
                                         console.log("Ha ganado O")
-                                        this.fichas1=0
-                                        this.fichas2=0
+                                        sessionStorage.setItem("winner",this.user2)
+
+                                        this.getWin()
                                         break
                                     }
 
@@ -81,7 +107,28 @@ class Game {
                                 }
 
                             }
+                        } else {
+                            this.fichas1 = 0
+                            this.fichas2 = 0
                         }
+                        if (this.fichas1 == 0 && this.fichas2 == 0) {
+                            if (this.interruptor){
+                                this.rest()
+                                this.cpuMovement()
+                                this.interruptor=this.interruptor
+                            }else{
+                                this.rest()
+
+                            }
+                        }
+
+
+
+
+
+
+// PLAYER VS PLAYER
+
 
                     case "PlayerVsPlayer":
                         if (this.fichas1 > 0 || this.fichas2 > 0) {
@@ -95,8 +142,9 @@ class Game {
                                     this.fichas1 -= 1
                                     if (this.checkVictory("X")) {
                                         console.log("Ha ganado X")
-                                        this.fichas1=0
-                                        this.fichas2=0
+                                        sessionStorage.setItem("winner",this.user1)
+
+                                        this.getWin()
                                         break
                                     }
 
@@ -106,18 +154,27 @@ class Game {
                                     this.fichas2 -= 1
                                     if (this.checkVictory("O")) {
                                         console.log("Ha ganado O")
-                                        this.fichas1=0
-                                        this.fichas2=0                                        
+                                        sessionStorage.setItem("winner",this.user2)
+
+                                        this.getWin()
                                         break
                                     }
                                 }
 
                             }
+                        } else {
+                            this.fichas1 = 0
+                            this.fichas2 = 0
+                            this.rest()
                         }
                 }
             })
         })
     }
+
+
+
+//GESTOR DE TURNOS
 
     countTurns() {
 
@@ -140,6 +197,10 @@ class Game {
             })
         })
     }
+
+
+
+// PARA OBTENER TODOS LOS DATOS NECESARIOS
 
     getGameData() {
         this.user1 = sessionStorage.getItem("first")
@@ -180,6 +241,10 @@ class Game {
         )
     }
 
+
+    getWin(){
+        window.location = "../pages/win.html"
+    }
 
 
 
@@ -236,6 +301,136 @@ class Game {
 
 
 
+    dropCPU() {
+        let freeCells = this.casillas.filter((celda) => {
+
+            if (celda.innerHTML == ".") {
+                return celda
+            }
+
+
+        })
+        let randomChoice = parseInt(Math.random() * freeCells.length)
+
+        let cpuCells = this.casillas.filter((celda) => {
+
+            if (celda.innerHTML == "O") {
+                return celda
+            }
+
+
+        })
+        let randomChoice2 = parseInt(Math.random() * cpuCells.length)
+
+        freeCells[randomChoice].innerHTML = "."
+
+
+        cpuCells[randomChoice2].innerHTML = "O"
+        
+
+
+
+
+
+    }
+
+    rest() {
+
+        switch(this.gamemode){
+            case "PlayerVsCPU":
+                this.casillas.map((casilla)=>{
+                    casilla.addEventListener("click",()=>{
+                        if (casilla.innerHTML=="X"){
+                            casilla.innerHTML="."
+                            this.fichas2 += 1
+                            this.StartGame()
+                        }
+                        if (casilla.innerHTML=="O"){
+                            casilla.innerHTML="."
+                            this.fichas1 += 1
+                            this.interruptor = false
+                            this.StartGame()
+                            this.cpuMovement()
+                        }
+                    })
+                })
+
+            case "CPUvsPlayer":
+                this.casillas.map((casilla) => {
+                    casilla.addEventListener("click", () => {
+        
+                        if (casilla.innerHTML == "X") {
+                            casilla.innerHTML = "."
+                            this.fichas1+=1
+                            console.log(this.fichas1)
+                            this.StartGame()
+
+                            this.getGameData()
+                            this.countTurns()
+                            if (this.gamemode == "CPUvsPlayer") {
+                                this.cpuMovement()
+                            }
+
+
+
+
+
+                        }
+        
+                        if (casilla.innerHTML == "O") {
+                            casilla.innerHTML = "."
+                            this.fichas2+=1
+                            console.log(this.fichas2)
+                            this.StartGame()
+                        }
+        
+        
+                    })
+                })
+
+            case "PlayerVsPlayer":
+                this.casillas.map((casilla) => {
+                    casilla.addEventListener("click", () => {
+        
+                        if (casilla.innerHTML == "X") {
+                            casilla.innerHTML = "."
+                            this.fichas1+=1
+                            console.log(this.fichas1)
+                            this.StartGame()
+
+                            this.getGameData()
+                            this.countTurns()
+                            if (this.gamemode == "CPUvsPlayer") {
+                                this.cpuMovement()
+                            }
+
+
+
+
+
+                        }
+        
+                        if (casilla.innerHTML == "O") {
+                            casilla.innerHTML = "."
+                            this.fichas2+=1
+                            console.log(this.fichas2)
+                            this.StartGame()
+                        }
+        
+        
+                    })
+                })
+        }
+        
+
+
+    }
+
+
+
+
+
+
 
 
 }
@@ -245,7 +440,8 @@ let tictac = new Game()
 tictac.getGameData()
 tictac.StartGame()
 tictac.countTurns()
-
+// tictac.atEnd()
 if (tictac.gamemode == "CPUvsPlayer") {
     tictac.cpuMovement()
 }
+
