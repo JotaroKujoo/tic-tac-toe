@@ -1,111 +1,97 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="../css/style.css">
 </head>
-
 <body>
 
-    <div class="container-fluid h-100">
+    <div class="row container-fluid h-100 w-100 p-0 m-0">
+        
+        <div class="col-md-9 p-0 m-0 d-flex justify-content-center">
 
 
-        <div class="row h-100 ">
+            <div class="col-12  d-flex justify-content-center h-100">
+                <div class="col d-flex justify-content-center align-items-center border border-1">
 
-
-
-            <div class="col-10 border border-1 container-fluid text-white d-flex justify-content-center align-items-center ">
-            
-                <div class="row h-75 w-75  border border-1 text-white tictac">
-            
-            
-            
-                    <div class="row p-0 m-0 ">
-                        <div class="col casillas d-flex justify-content-center align-items-center border border-1 "></div>
-
-                        <div class="col casillas d-flex justify-content-center align-items-center border border-1 "></div>
-
-                        <div class="col casillas d-flex justify-content-center align-items-center border border-1 "></div>
-                    </div>
-            
-            
-                    <div class="row p-0 m-0 ">
-                        <div class="col casillas  border border-1 "></div>
-                        
-                        <div class="col casillas d-flex justify-content-center align-items-center border border-1 "></div>
-
-                        <div class="col casillas d-flex justify-content-center align-items-center border border-1 "></div>
-                    </div>
-            
-            
-                    <div class="row p-0 m-0 ">
-            
-                        <div class="col casillas d-flex justify-content-center align-items-center border border-1 "></div>
-
-                        <div class="col casillas d-flex justify-content-center align-items-center border border-1 "></div>
-
-                        <div class="col casillas d-flex justify-content-center align-items-center border border-1 "></div>
-            
-                    </div>
-            
-                </div>
-            
-            </div>
-
-
-
-
-            <div class="col-sm-2 border  border-1">
-                <div class="row">
-                    <div class="col text-center text-white">
-                        <h2>Tic Tac Toe</h2>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col">
-                        <div class="container text-white">
-                            Player 1 turn:
+                    <div class="row d-flex justify-content-center  h-75 w-75 ">
+                        <div class="row">
+                            <div id="0" class="col celda border border-1 ">.</div>
+                            <div id="1" class="col celda border border-1">.</div>
+                            <div id="2" class="col celda border border-1">.</div>
                         </div>
-                        <div class="card text-center">
-                            Es tu turno
+                        <div class="row">
+                            <div id="3" class="col celda border border-1 ">.</div>
+                            <div id="4" class="col celda border border-1">.</div>
+                            <div id="5" class="col celda border border-1">.</div>
+                        </div>
+                        <div class="row">
+                            <div id="6" class="col celda border border-1 ">.</div>
+                            <div id="7" class="col celda border border-1">.</div>
+                            <div id="8" class="col celda border border-1">.</div>
                         </div>
                     </div>
-                </div>
-
-                <div class="row">
-                    <div class="col">
-                        <div class="container text-white">
-                            Player 2 turn:
-                        </div>
-                        <div class="card text-center">
-                            No es tu turno
-                        </div>
-                    </div>
+        
                 </div>
 
             </div>
-
 
 
 
 
         </div>
 
+        <div class="col-md-3 border border-1">
+
+            
+
+            <div class="row h-50">
+
+                <div class="row-cols-1 text-white p-0 m-0 ">
+                    <div class="text-center">
+                        <h1>Tic Tac Toe</h1>
+                    </div>
+                </div>
+
+
+                <div class="col ">
+                    <div id="namePlayer1" class="mb-2 container text-center text-white">
+                        Player 1 turn:
+                    </div>
+                    <div id="player1Turn" class="container  bg-white border-primary h-50  w-50 d-flex justify-content-center align-items-center text-center">
+                        X
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="row h-50">
+                <div class="col">
+
+                    <div id="namePlayer2" class="mb-2 container text-center text-white">
+                        Player 2 turn:
+                    </div>
+                    <div id="player2Turn" class="container  bg-white border-primary h-25  w-50 d-flex justify-content-center align-items-center text-center">
+                        O
+                    </div>
+
+                </div>
+            </div>
+
+
+        </div>
     </div>
 
 
-    <script src="../js/main.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-        crossorigin="anonymous"></script>
-
+    
+    
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+<script src="../js/main.js"></script>
+<script src="../js/game.js"></script>
 </body>
-
 </html>

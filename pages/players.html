@@ -1,83 +1,95 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Document</title>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-        <link rel="stylesheet" href="../css/style.css">
-    </head>
-    <body>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+
+
+
+
+
+
+
+
+    <div class="container-fluid  d-flex justify-content-center align-items-center h-100 text-white ">
     
-        <div class="container-fluid  d-flex justify-content-center align-items-center h-100 text-white ">
-    
 
 
-            <div class="container  w-100 h-75  ">
+        <div class="container  w-100 h-75  ">
 
 
-                <div class="row d-flex justify-content-center h-75">
+            <div class="row d-flex justify-content-center h-75">
 
 
-                    <div class="col-7 p-3 d-flex flex-column border-3 border border-white justify-content-center ">
+                <div class="col-7 p-3 d-flex flex-column border-3 border border-white justify-content-center ">
 
 
-                        <div class="row mb-3  d-flex flex-column justify-content-between">
+                    <div class="row mb-3  d-flex flex-column justify-content-between">
 
-                                <div class="col d-flex justify-content-center">
-                                    <input  class="radio" type="radio" id="PlayerVsCPU" name="option" value="PlayerVsCPU">
-                                    <label class="ms-2" for="PlayerVsCPU"><h5> Player vs CPU</h5></label>
-                                </div>
-
-
-                                <div class="col d-flex justify-content-center">
-                                    <input class="radio" type="radio" id="CPUvsPlayer" name="option" value="CPUvsPlayer">
-                                    <label class="ms-2" for="CPUvsPlayer"><h5> CPU vs Player</h5></label>
-                                </div>
-                            
-
-                                <div class="col d-flex justify-content-center">
-                                    <input class="radio" type="radio" id="PlayerVsPlayer" name="option" value="PlayerVsPlayer">
-                                    <label class="ms-2" for="PlayerVsPlayer"> <h5>Player vs Player</h5></label>
-                                </div>
-                        
-                        </div>
-
-
-
-                        
-
-
-                        <div class="row d-flex justify-content-center text-center">
-
-
-                            <div class="col-7">
-                                <div class="mb-3">
-                                  <label for="user1" id="firstPlayer" class="form-label">Name Player</label>
-                                  <input  class="form-control" id="user1"  aria-describedby="emailHelp">
-                                </div>
-                                <button class="saveButt p-0 container-fluid btn btn-secondary"> save player </button>
-
-                                <div class="col mb-3">
-                                  <label for="CPU" id="secondPlayer" class="form-label">Name CPU</label>
-                                  <input  class="form-control" id="user2">
-                                </div>
-                                <button class="safeButt p-0 container-fluid btn btn-secondary mb-3"> save player </button>
-                                <a class="text-dark" href="./game.html"></a><button type="submit" id="saveButton" class="container-fluid btn btn-light " >Start</button></a>
+                            <div class="col d-flex justify-content-center">
+                                <input  class="radio" type="radio" id="PlayerVsCPU" name="option" value="PlayerVsCPU">
+                                <label class="ms-2" for="PlayerVsCPU"><h5> Player vs CPU</h5></label>
                             </div>
 
 
-                        </div>
+                            <div class="col d-flex justify-content-center">
+                                <input class="radio" type="radio" id="CPUvsPlayer" name="option" value="CPUvsPlayer">
+                                <label class="ms-2" for="CPUvsPlayer"><h5> CPU vs Player</h5></label>
+                            </div>
+                        
 
-
+                            <div class="col d-flex justify-content-center">
+                                <input class="radio" type="radio" id="PlayerVsPlayer" name="option" value="PlayerVsPlayer">
+                                <label class="ms-2" for="PlayerVsPlayer"> <h5>Player vs Player</h5></label>
+                            </div>
+                    
                     </div>
+
 
 
                     
 
 
+                    <div class="row d-flex justify-content-center text-center">
+
+
+
+
+
+                        <div class="col-7">
+                            <div class="mb-3">
+                              <label for="user1" id="firstPlayer" class="form-label">Name Player</label>
+                              <input  class="form-control users" id="user1"  aria-describedby="emailHelp">
+                            </div>
+
+                            <div class="col mb-3">
+                              <label for="CPU" id="secondPlayer" class="form-label">Name CPU</label>
+                              <input  class="form-control users" id="user2">
+                            </div>
+                            <a href="./game.html"> <button type="submit" id="saveButton" class="safeButt container-fluid btn btn-secondary " > Siguiente </button></a>
+                        </div>
+
+
+
+
+
+
+
+
+
+                    </div>
+
+
                 </div>
+
+
                 
 
 
@@ -86,8 +98,15 @@
 
 
         </div>
+        
+
+
+    </div>
+
     
-        <script src="../js/main.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-    </body>
+    
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+<script src="../js/main.js"></script>
+</body>
 </html>
+
