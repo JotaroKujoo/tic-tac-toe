@@ -4,15 +4,54 @@ const getData = () => {
     let gamemode = sessionStorage.getItem("gamemode")
     return [gamemode, user1, user2]
 }
-const validateMove = (casilla) => {
-    if (fichas1 > 0 || fichas2 > 0) {
-        if (casilla.innerHTML == ".") {
-            casilla.classList.add("estiloCelda2")
-            casilla.innerHTML = (interruptor) ? "O" : "X"
-            interruptor = !interruptor
-        }
+
+
+const checkCell = (casilla) => {
+    if (casilla.innerHTML=="." && fichas1 > 0 || casilla.innerHTML=="." && fichas2 > 0) {
+        validateMove(casilla)
     }
 }
+
+
+
+const validateMove = (casilla) => {
+            casilla.classList.add("estiloCelda2")
+            casilla.innerHTML = (interruptor) ? "X" : "O"
+            
+            checkTurn(casilla)
+      
+}
+
+
+const checkTurn = (casilla) => {
+    if (interruptor==true){
+        interruptor = !interruptor
+        fichas1-=1
+        valCPU()
+    }
+    if (interruptor==false){
+        interruptor = !interruptor
+        fichas2-=1
+        valCPU()
+    }
+}
+
+
+
+
+
+const valCPU = () => {
+    if (!interruptor){
+        cpuMove()
+
+    }
+
+}
+
+
+
+
+
 const cpuMove = () => {
     if (fichas1 > 0 || fichas2 > 0){
         let freeCell = casillas.filter((casilla) => {
@@ -22,17 +61,17 @@ const cpuMove = () => {
         })
         let randomChoice = parseInt(Math.random() * freeCell.length)
         freeCell[randomChoice].click()
-        return fichas2 -= 1
     }
 }
-const checkCell = () => {
-    if (fichas1 > 0 || fichas2 > 0) {
-        if (interruptor) {
-            cpuMove()
-            return fichas1 -= 1
-        }
-    }
-}
+
+
+
+
+
+
+
+
+
 let fichas1 = 3
 let fichas2 = 3
 let gamemode = getData()[0]
@@ -40,41 +79,59 @@ let user1 = getData()[1]
 let user2 = getData()[2]
 let interruptor = false
 let casillas = Array.from(document.getElementsByClassName("celda"))
-switch(gamemode){
-    case "PlayerVsCPU":
-        casillas.map((casilla) => {
-            if (fichas1 > 0 || fichas2 > 0) {
-                casilla.addEventListener("click", () => {
-                    validateMove(casilla)
-                    checkCell()
-                    console.log(fichas1,fichas2)
-                })
-            }
-        })
-        break
-    case "CPUvsPlayer":
-        casillas.map((casilla) => {
-            if (fichas1 > 0 || fichas2 > 0) {
-                casilla.addEventListener("click", () => {
-                    if (fichas2==3){
-                        cpuMove()
-                    }
-                    validateMove(casilla)
-                    checkCell(casilla)
-                })
-            }
-        })
+
+casillas.map((casilla)=>{
     
-    case "PlayerVsPlayer":
-        casillas.map((casilla) => {
-            if (fichas1 > 0 || fichas2 > 0) {
-                casilla.addEventListener("click", () => {
-                    validateMove(casilla)
-                    checkCell(casilla)
-                })
+    if (casilla.innerHTML=="." && fichas1 > 0 || casilla.innerHTML=="." && fichas2 > 0) {
+        casilla.addEventListener("click",()=>{
+            switch(gamemode){
+                case "PlayerVsCPU":
+                    
+                    if (casilla.innerHTML=="." && fichas1 > 0 || casilla.innerHTML=="." && fichas2 > 0) {
+                        
+                            validateMove(casilla)
+                            console.log(fichas1,fichas2)
+                        
+                    }
+                    
+                    break
+                case "CPUvsPlayer":
+                    
+                    if (casilla.innerHTML=="." && fichas1 > 0 || casilla.innerHTML=="." && fichas2 > 0) {
+                        interruptor=true
+                        if(interruptor){
+                            cpuMove()
+                        }
+                        checkCell(casilla)
+                            
+                        
+                    }
+                    
+                
+                case "PlayerVsPlayer":
+                    
+                    if (casilla.innerHTML=="." && fichas1 > 0 || casilla.innerHTML=="." && fichas2 > 0) {
+                        
+                            checkCell(casilla)
+                        
+                    }
+                    
             }
+    
+    
+    
         })
-}
+
+
+
+    }
+
+
+    
+})
+
+
+
 
 
 
