@@ -440,7 +440,6 @@ let tictac = new Game()
 tictac.getGameData()
 tictac.StartGame()
 tictac.countTurns()
-// tictac.atEnd()
 if (tictac.gamemode == "CPUvsPlayer") {
     tictac.cpuMovement()
 }

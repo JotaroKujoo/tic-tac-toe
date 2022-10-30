@@ -5,7 +5,6 @@ const getData = () => {
     return [gamemode, user1, user2]
 }
 
-
 const checkCell = (casilla) => {
     if (casilla.innerHTML=="." && fichas1 > 0 || casilla.innerHTML=="." && fichas2 > 0) {
         validateMove(casilla)
@@ -13,26 +12,17 @@ const checkCell = (casilla) => {
 }
 
 
-
-const validateMove = (casilla) => {
-            casilla.classList.add("estiloCelda2")
-            casilla.innerHTML = (interruptor) ? "X" : "O"
-            
-            checkTurn(casilla)
-      
-}
-
-
-const checkTurn = (casilla) => {
-    if (interruptor==true){
-        interruptor = !interruptor
+const clickableMap = (casilla) => {
+    casilla.classList.add("estiloCelda2")
+    casilla.innerHTML = (interruptor) ? "X" : "O"
+    
+    if (casilla.innerHTML=="X"){
+        interruptor = !interruptor 
         fichas1-=1
-        valCPU()
     }
-    if (interruptor==false){
-        interruptor = !interruptor
+    if (casilla.innerHTML=="O"){
+        interruptor = !interruptor 
         fichas2-=1
-        valCPU()
     }
 }
 
@@ -40,16 +30,19 @@ const checkTurn = (casilla) => {
 
 
 
-const valCPU = () => {
-    if (!interruptor){
-        cpuMove()
 
+const valCPU = (casilla) => {
+    if (gamemode=="CPUvsPlayer"){
+        if (casilla.innerHTML=="O"){
+            cpuMove()
+        }
     }
-
+    if(gamemode=="PlayerVsCPU"){
+        if (casilla.innerHTML=="X"){
+            cpuMove()
+        }
+    }
 }
-
-
-
 
 
 const cpuMove = () => {
@@ -67,9 +60,19 @@ const cpuMove = () => {
 
 
 
+const checkVictory = (symbol) => {
+    return (
+        (casillas[0].innerHTML == symbol && casillas[0].innerHTML != "." && casillas[0].innerHTML == casillas[1].innerHTML && casillas[0].innerHTML == casillas[2].innerHTML) ||
+        (casillas[3].innerHTML == symbol && casillas[3].innerHTML != "." && casillas[3].innerHTML == casillas[4].innerHTML && casillas[3].innerHTML == casillas[5].innerHTML) ||
+        (casillas[6].innerHTML == symbol && casillas[6].innerHTML != "." && casillas[6].innerHTML == casillas[7].innerHTML && casillas[6].innerHTML == casillas[8].innerHTML) ||
+        (casillas[0].innerHTML == symbol && casillas[0].innerHTML != "." && casillas[0].innerHTML == casillas[3].innerHTML && casillas[0].innerHTML == casillas[6].innerHTML) ||
+        (casillas[1].innerHTML == symbol && casillas[1].innerHTML != "." && casillas[1].innerHTML == casillas[4].innerHTML && casillas[1].innerHTML == casillas[7].innerHTML) ||
+        (casillas[2].innerHTML == symbol && casillas[2].innerHTML != "." && casillas[2].innerHTML == casillas[5].innerHTML && casillas[2].innerHTML == casillas[8].innerHTML) ||
+        (casillas[0].innerHTML == symbol && casillas[0].innerHTML != "." && casillas[0].innerHTML == casillas[4].innerHTML && casillas[0].innerHTML == casillas[8].innerHTML) ||
+        (casillas[2].innerHTML == symbol && casillas[2].innerHTML != "." && casillas[2].innerHTML == casillas[4].innerHTML && casillas[2].innerHTML == casillas[6].innerHTML)
 
-
-
+    )
+}
 
 
 let fichas1 = 3
@@ -77,68 +80,47 @@ let fichas2 = 3
 let gamemode = getData()[0]
 let user1 = getData()[1]
 let user2 = getData()[2]
-let interruptor = false
+let interruptor = true
 let casillas = Array.from(document.getElementsByClassName("celda"))
 
+
+
 casillas.map((casilla)=>{
-    
-    if (casilla.innerHTML=="." && fichas1 > 0 || casilla.innerHTML=="." && fichas2 > 0) {
-        casilla.addEventListener("click",()=>{
-            switch(gamemode){
-                case "PlayerVsCPU":
-                    
-                    if (casilla.innerHTML=="." && fichas1 > 0 || casilla.innerHTML=="." && fichas2 > 0) {
-                        
-                            validateMove(casilla)
-                            console.log(fichas1,fichas2)
-                        
-                    }
-                    
-                    break
-                case "CPUvsPlayer":
-                    
-                    if (casilla.innerHTML=="." && fichas1 > 0 || casilla.innerHTML=="." && fichas2 > 0) {
-                        interruptor=true
-                        if(interruptor){
-                            cpuMove()
-                        }
-                        checkCell(casilla)
-                            
-                        
-                    }
-                    
-                
-                case "PlayerVsPlayer":
-                    
-                    if (casilla.innerHTML=="." && fichas1 > 0 || casilla.innerHTML=="." && fichas2 > 0) {
-                        
-                            checkCell(casilla)
-                        
-                    }
-                    
+    casilla.addEventListener("click",function StartGame(){
+        if (casilla.innerHTML=="." && fichas1 > 0 || casilla.innerHTML=="." && fichas2 > 0) {
+            clickableMap(casilla)
+            valCPU(casilla)
+            if (checkVictory("X")){
+                console.log("Ha ganado X")
             }
-    
-    
-    
-        })
-
-
-
-    }
-
-
-    
+            if(checkVictory("O")){
+                console.log("Ha ganado O")
+            }
+            console.log("Sigo funcionando")
+        }
+        
+        
+    })
 })
+if (fichas1 == 0 && fichas2 == 0){
+    casillas.map((casilla)=>{
+        casilla.removeEventListener("click",StartGame())
+    })
+    
+}
 
 
 
+switch(gamemode){
+    case "PlayerVsCPU":
+        break
+
+    case "CPUvsPlayer":
+        cpuMove()
+        break
+        
+    case "PlayerVsPlayer":
+        break
+}
 
 
-
-
-
-
-
-// casillas.map((casilla)=>{
-//     console.log(casilla)
-// })
