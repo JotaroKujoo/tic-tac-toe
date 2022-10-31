@@ -1,126 +1,259 @@
-const getData = () => {
-    let user1 = sessionStorage.getItem("first")
-    let user2 = sessionStorage.getItem("second")
-    let gamemode = sessionStorage.getItem("gamemode")
-    return [gamemode, user1, user2]
-}
-
-const checkCell = (casilla) => {
-    if (casilla.innerHTML=="." && fichas1 > 0 || casilla.innerHTML=="." && fichas2 > 0) {
-        validateMove(casilla)
+class User1 {
+    constructor(namePlayer, rol, fichas = 3, symbol = "X") {
+        this.namePlayer = namePlayer
+        this.rol = rol
+        this.fichas = fichas
+        this.symbol = symbol
     }
-}
 
+    validateRol(gamemode) {
+        gamemode = sessionStorage.getItem("gamemode")
 
-const clickableMap = (casilla) => {
-    casilla.classList.add("estiloCelda2")
-    casilla.innerHTML = (interruptor) ? "X" : "O"
-    
-    if (casilla.innerHTML=="X"){
-        interruptor = !interruptor 
-        fichas1-=1
-    }
-    if (casilla.innerHTML=="O"){
-        interruptor = !interruptor 
-        fichas2-=1
-    }
-}
-
-
-
-
-
-
-const valCPU = (casilla) => {
-    if (gamemode=="CPUvsPlayer"){
-        if (casilla.innerHTML=="O"){
-            cpuMove()
+        switch (gamemode) {
+            case "CPUvsPlayer":
+                this.rol = "CPU"
+                break
+            case "PlayerVsCPU":
+                this.rol = "Player"
+                break
+            case "PlayerVsPlayer":
+                this.rol = "Player"
+                break
         }
     }
-    if(gamemode=="PlayerVsCPU"){
-        if (casilla.innerHTML=="X"){
-            cpuMove()
-        }
+
+    getUserData() {
+        this.namePlayer = sessionStorage.getItem("first")
+
     }
 }
 
 
-const cpuMove = () => {
-    if (fichas1 > 0 || fichas2 > 0){
-        let freeCell = casillas.filter((casilla) => {
-            if (casilla.innerHTML == ".") {
-                return casilla
-            }
+
+class User2 {
+    constructor(namePlayer, rol, fichas = 3, symbol = "O") {
+        this.namePlayer = namePlayer
+        this.rol = rol
+        this.fichas = fichas
+        this.symbol = symbol
+    }
+
+    validateRol(gamemode) {
+        gamemode = sessionStorage.getItem("gamemode")
+        console.log(gamemode)
+        switch (gamemode) {
+            case "CPUvsPlayer":
+                this.rol = "Player"
+                break
+            case "PlayerVsCPU":
+                this.rol = "CPU"
+                break
+            case "PlayerVsPlayer":
+                this.rol = "Player"
+                break
+        }
+    }
+
+    getUserData() {
+        this.namePlayer = sessionStorage.getItem("second")
+    }
+}
+
+
+class Game {
+    constructor(user1, user2, gamemode, casillas, interruptor = true) {
+        this.user1 = user1;
+        this.user2 = user2;
+        this.gamemode = gamemode
+        this.casillas = casillas
+        this.interruptor = interruptor
+    }
+
+    getGameMode() {
+        this.gamemode = sessionStorage.getItem("gamemode")
+    }
+
+
+
+
+
+    StartGame() {
+        this.casillas = Array.from(document.getElementsByClassName("celda"))
+        this.casillas.map((casilla) => {
+            casilla.addEventListener("click", this.Start = () => {
+                if (user1.fichas > 0 || user2.fichas > 0) {
+                    if (casilla.innerHTML == ".") {
+                        casilla.classList.add("estiloCelda2")
+                        casilla.innerHTML = (this.interruptor) ? "X" : "O"
+                        this.interruptor = !this.interruptor
+                        switch (this.gamemode) {
+
+
+
+                            case "PlayerVsCPU":
+                                if (casilla.innerHTML == "X") {
+                                    user1.fichas -= 1
+                                    this.validateCPU()
+                                }
+                                if (casilla.innerHTML == "O") {
+                                    user2.fichas -= 1
+                                }
+                                break
+
+
+
+                            case "CPUvsPlayer":
+                                if (casilla.innerHTML == "X") {
+                                    user1.fichas -= 1
+                                }
+                                if (casilla.innerHTML == "O") {
+                                    user2.fichas -= 1
+                                    this.validateCPU()
+                                }
+                                break
+
+
+
+                            case "PlayerVsPlayer":
+                                if (casilla.innerHTML == "X") {
+                                    user1.fichas -= 1
+                                    if (this.checkVictory("X")) {
+                                        console.log("Ha ganado X")
+                                        sessionStorage.setItem("winner", user1.namePlayer)
+
+                                        this.getWin()
+                                        break
+                                    }
+
+                                }
+                                if (casilla.innerHTML == "O") {
+                                    user2.fichas -= 1
+                                    if (this.checkVictory("O")) {
+                                        console.log("Ha ganado O")
+                                        sessionStorage.setItem("winner", user2.namePlayer)
+
+                                        this.getWin()
+                                        break
+                                    }
+                                }
+                                break
+                        }
+
+                    }
+                }
+                if (user1.fichas == 0 && user2.fichas == 0) {
+
+                    casilla.addEventListener("click", () => {
+                        console.log("Aqui bien")
+                        switch (this.gamemode) {
+                            case "CPUvsPlayer":
+                                if (casilla.innerHTML == "X" && this.interruptor == true) {
+                                    casilla.innerHTML = "."
+                                    user1.fichas = 1
+                                    this.interruptor = true
+                                }
+                                if (casilla.innerHTML == "O" && this.interruptor == false) {
+                                    casilla.innerHTML = "."
+                                    user2.fichas = 1
+                                    this.interruptor = false
+                                }
+
+                                break
+                            case "PlayerVsCPU":
+                                break
+                            case "PlayerVsPlayer":
+                                if (casilla.innerHTML == "X" && this.interruptor == true) {
+                                    user1.fichas = 1
+                                    casilla.innerHTML = "."
+                                    this.interruptor = true
+                                    break
+                                }
+                                if (casilla.innerHTML == "O" && this.interruptor == false) {
+                                    user2.fichas = 1
+                                    this.interruptor = false
+                                    casilla.innerHTML = "."
+                                    break
+                                }
+                                break
+                        }
+                    })
+
+
+                }
+            })
         })
-        let randomChoice = parseInt(Math.random() * freeCell.length)
-        freeCell[randomChoice].click()
     }
-}
 
+   
 
+    validateCPU() {
 
-
-const checkVictory = (symbol) => {
-    return (
-        (casillas[0].innerHTML == symbol && casillas[0].innerHTML != "." && casillas[0].innerHTML == casillas[1].innerHTML && casillas[0].innerHTML == casillas[2].innerHTML) ||
-        (casillas[3].innerHTML == symbol && casillas[3].innerHTML != "." && casillas[3].innerHTML == casillas[4].innerHTML && casillas[3].innerHTML == casillas[5].innerHTML) ||
-        (casillas[6].innerHTML == symbol && casillas[6].innerHTML != "." && casillas[6].innerHTML == casillas[7].innerHTML && casillas[6].innerHTML == casillas[8].innerHTML) ||
-        (casillas[0].innerHTML == symbol && casillas[0].innerHTML != "." && casillas[0].innerHTML == casillas[3].innerHTML && casillas[0].innerHTML == casillas[6].innerHTML) ||
-        (casillas[1].innerHTML == symbol && casillas[1].innerHTML != "." && casillas[1].innerHTML == casillas[4].innerHTML && casillas[1].innerHTML == casillas[7].innerHTML) ||
-        (casillas[2].innerHTML == symbol && casillas[2].innerHTML != "." && casillas[2].innerHTML == casillas[5].innerHTML && casillas[2].innerHTML == casillas[8].innerHTML) ||
-        (casillas[0].innerHTML == symbol && casillas[0].innerHTML != "." && casillas[0].innerHTML == casillas[4].innerHTML && casillas[0].innerHTML == casillas[8].innerHTML) ||
-        (casillas[2].innerHTML == symbol && casillas[2].innerHTML != "." && casillas[2].innerHTML == casillas[4].innerHTML && casillas[2].innerHTML == casillas[6].innerHTML)
-
-    )
-}
-
-
-let fichas1 = 3
-let fichas2 = 3
-let gamemode = getData()[0]
-let user1 = getData()[1]
-let user2 = getData()[2]
-let interruptor = true
-let casillas = Array.from(document.getElementsByClassName("celda"))
-
-
-
-casillas.map((casilla)=>{
-    casilla.addEventListener("click",function StartGame(){
-        if (casilla.innerHTML=="." && fichas1 > 0 || casilla.innerHTML=="." && fichas2 > 0) {
-            clickableMap(casilla)
-            valCPU(casilla)
-            if (checkVictory("X")){
-                console.log("Ha ganado X")
-            }
-            if(checkVictory("O")){
-                console.log("Ha ganado O")
-            }
-            console.log("Sigo funcionando")
+        if (user1.fichas > 0 || user2.fichas > 0) {
+            let freeCells = this.casillas.filter((celda) => {
+                if (celda.innerHTML == ".") {
+                    return celda
+                }
+            })
+            let randomChoice = parseInt(Math.random() * freeCells.length)
+            freeCells[randomChoice].click()
         }
-        
-        
-    })
-})
-if (fichas1 == 0 && fichas2 == 0){
-    casillas.map((casilla)=>{
-        casilla.removeEventListener("click",StartGame())
-    })
-    
+
+
+
+    }
+
+    validateCPU2(symbol) {
+        if (user1.fichas == 0 || user2.fichas == 0) {
+            let freeCells = this.casillas.filter((celda) => {
+                if (celda.innerHTML == symbol) {
+                    return celda
+                }
+            })
+            let randomChoice = parseInt(Math.random() * freeCells.length)
+            freeCells[randomChoice].click()
+        }
+    }
+
+    checkVictory(symbol) {
+            return (
+                (this.casillas[0].innerHTML == symbol && this.casillas[0].innerHTML != "." && this.casillas[0].innerHTML == this.casillas[1].innerHTML && this.casillas[0].innerHTML == this.casillas[2].innerHTML) ||
+                (this.casillas[3].innerHTML == symbol && this.casillas[3].innerHTML != "." && this.casillas[3].innerHTML == this.casillas[4].innerHTML && this.casillas[3].innerHTML == this.casillas[5].innerHTML) ||
+                (this.casillas[6].innerHTML == symbol && this.casillas[6].innerHTML != "." && this.casillas[6].innerHTML == this.casillas[7].innerHTML && this.casillas[6].innerHTML == this.casillas[8].innerHTML) ||
+                (this.casillas[0].innerHTML == symbol && this.casillas[0].innerHTML != "." && this.casillas[0].innerHTML == this.casillas[3].innerHTML && this.casillas[0].innerHTML == this.casillas[6].innerHTML) ||
+                (this.casillas[1].innerHTML == symbol && this.casillas[1].innerHTML != "." && this.casillas[1].innerHTML == this.casillas[4].innerHTML && this.casillas[1].innerHTML == this.casillas[7].innerHTML) ||
+                (this.casillas[2].innerHTML == symbol && this.casillas[2].innerHTML != "." && this.casillas[2].innerHTML == this.casillas[5].innerHTML && this.casillas[2].innerHTML == this.casillas[8].innerHTML) ||
+                (this.casillas[0].innerHTML == symbol && this.casillas[0].innerHTML != "." && this.casillas[0].innerHTML == this.casillas[4].innerHTML && this.casillas[0].innerHTML == this.casillas[8].innerHTML) ||
+                (this.casillas[2].innerHTML == symbol && this.casillas[2].innerHTML != "." && this.casillas[2].innerHTML == this.casillas[4].innerHTML && this.casillas[2].innerHTML == this.casillas[6].innerHTML)
+
+            )
+        }
+        getWin() {
+            window.location = "../pages/win.html"
+        }
+
+
+
+
 }
 
 
 
-switch(gamemode){
-    case "PlayerVsCPU":
-        break
+let user1 = new User1()
+let user2 = new User2()
+user1.getUserData()
+user1.validateRol()
 
-    case "CPUvsPlayer":
-        cpuMove()
-        break
-        
-    case "PlayerVsPlayer":
-        break
+user2.getUserData()
+user2.validateRol()
+let tictac = new Game(user1, user2)
+
+tictac.getGameMode()
+tictac.StartGame()
+if (tictac.gamemode == "CPUvsPlayer") {
+    tictac.validateCPU()
+    tictac.validateCPU2("X")
 }
-
-
+if (user1.fichas == 0 && user2.fichas == 0) {
+    tictac.StopGame()
+    console.log("Funciono")
+}
