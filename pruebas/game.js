@@ -6,25 +6,14 @@ class User1 {
         this.symbol = symbol
     }
 
-    validateRol(gamemode) {
-        gamemode = sessionStorage.getItem("gamemode")
-
-        switch (gamemode) {
-            case "CPUvsPlayer":
-                this.rol = "CPU"
-                break
-            case "PlayerVsCPU":
-                this.rol = "Player"
-                break
-            case "PlayerVsPlayer":
-                this.rol = "Player"
-                break
-        }
-    }
-
     getUserData() {
         this.namePlayer = sessionStorage.getItem("first")
 
+    }
+    
+    setNameOnScreen(){
+        let htmlUser1Content = document.getElementById("namePlayer1")
+        htmlUser1Content.innerHTML = this.namePlayer
     }
 }
 
@@ -38,24 +27,15 @@ class User2 {
         this.symbol = symbol
     }
 
-    validateRol(gamemode) {
-        gamemode = sessionStorage.getItem("gamemode")
-        console.log(gamemode)
-        switch (gamemode) {
-            case "CPUvsPlayer":
-                this.rol = "Player"
-                break
-            case "PlayerVsCPU":
-                this.rol = "CPU"
-                break
-            case "PlayerVsPlayer":
-                this.rol = "Player"
-                break
-        }
-    }
+    
 
     getUserData() {
         this.namePlayer = sessionStorage.getItem("second")
+    }
+
+    setNameOnScreen(){
+        let htmlUser1Content = document.getElementById("namePlayer2")
+        htmlUser1Content.innerHTML = this.namePlayer
     }
 }
 
@@ -71,6 +51,28 @@ class Game {
 
     getGameMode() {
         this.gamemode = sessionStorage.getItem("gamemode")
+    }
+
+    countTurns() {
+        this.casillas = Array.from(document.getElementsByClassName("celda"))
+        this.casillas.map((casilla) => {
+            casilla.addEventListener("click", () => {
+                if (this.interruptor == true) {
+                    let rivalTurn = document.getElementById("player2Turn")
+                    rivalTurn.innerHTML = "O"
+                    let turn = document.getElementById("player1Turn")
+                    turn.innerHTML = `<h1>${turn.innerHTML}</h1>`
+                    // console.log("Aqui tambien")
+                } else {
+                    let rivalTurn = document.getElementById("player1Turn")
+                    rivalTurn.innerHTML = "X"
+                    let turn = document.getElementById("player2Turn")
+                    turn.innerHTML = `<h1>${turn.innerHTML}</h1>`
+                    // console.log("funciono")
+
+                }
+            })
+        })
     }
 
 
@@ -103,10 +105,10 @@ class Game {
 
 
                             case "CPUvsPlayer":
-                                if (casilla.innerHTML == "X") {
+                                if (this.interruptor==false) {
                                     user1.fichas -= 1
                                 }
-                                if (casilla.innerHTML == "O") {
+                                if (this.interruptor==true) {
                                     user2.fichas -= 1
                                     this.validateCPU()
                                 }
@@ -142,24 +144,47 @@ class Game {
                     }
                 }
                 if (user1.fichas == 0 && user2.fichas == 0) {
-
+                    if(this.interruptor==false){
+                        console.log("prueba aqui")
+                    }
+                    
                     casilla.addEventListener("click", () => {
-                        console.log("Aqui bien")
+
+                        
+                        
                         switch (this.gamemode) {
+
+
+
                             case "CPUvsPlayer":
+
                                 if (casilla.innerHTML == "X" && this.interruptor == true) {
                                     casilla.innerHTML = "."
                                     user1.fichas = 1
                                     this.interruptor = true
+                                    this.Start()
                                 }
                                 if (casilla.innerHTML == "O" && this.interruptor == false) {
                                     casilla.innerHTML = "."
                                     user2.fichas = 1
                                     this.interruptor = false
+                                    this.Start()
                                 }
 
                                 break
                             case "PlayerVsCPU":
+                                if (casilla.innerHTML == "X" && this.interruptor == true) {
+                                    casilla.innerHTML = "."
+                                    user1.fichas = 1
+                                    this.interruptor = true
+                                    this.Start()
+                                }
+                                if (casilla.innerHTML == "O" && this.interruptor == false) {
+                                    casilla.innerHTML = "."
+                                    
+                                    this.interruptor = false
+                                    this.Start()
+                                }
                                 break
                             case "PlayerVsPlayer":
                                 if (casilla.innerHTML == "X" && this.interruptor == true) {
@@ -209,8 +234,14 @@ class Game {
                     return celda
                 }
             })
+
             let randomChoice = parseInt(Math.random() * freeCells.length)
+            console.log(symbol)
+            console.log(freeCells[randomChoice])
             freeCells[randomChoice].click()
+            freeCells[randomChoice].click()
+            this.interruptor = true
+            user2.fichas = 1
         }
     }
 
@@ -241,19 +272,28 @@ class Game {
 let user1 = new User1()
 let user2 = new User2()
 user1.getUserData()
-user1.validateRol()
+user1.setNameOnScreen()
 
 user2.getUserData()
-user2.validateRol()
+user2.setNameOnScreen()
 let tictac = new Game(user1, user2)
 
 tictac.getGameMode()
 tictac.StartGame()
+tictac.countTurns()
 if (tictac.gamemode == "CPUvsPlayer") {
     tictac.validateCPU()
     tictac.validateCPU2("X")
 }
-if (user1.fichas == 0 && user2.fichas == 0) {
-    tictac.StopGame()
-    console.log("Funciono")
-}
+
+tictac.casillas.map((casilla)=>{
+    casilla.addEventListener("click",()=>{
+        if (user1.fichas == 0 && user2.fichas == 0) {
+            if (tictac.gamemode == "CPUvsPlayer") {
+                
+                tictac.validateCPU2("X")
+            }
+            console.log("Funciono")
+        }
+    })
+})
