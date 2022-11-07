@@ -96,9 +96,23 @@ class Game {
                                 if (casilla.innerHTML == "X") {
                                     user1.fichas -= 1
                                     this.validateCPU()
+                                    if (this.checkVictory("X")) {
+                                        console.log("Ha ganado X")
+                                        sessionStorage.setItem("winner", this.user1.namePlayer)
+
+                                        this.getWin()
+                                        break
+                                    }
                                 }
                                 if (casilla.innerHTML == "O") {
                                     user2.fichas -= 1
+                                    if (this.checkVictory("O")) {
+                                        console.log("Ha ganado O")
+                                        sessionStorage.setItem("winner", this.user2.namePlayer)
+
+                                        this.getWin()
+                                        break
+                                    }
                                 }
                                 break
 
@@ -107,10 +121,24 @@ class Game {
                             case "CPUvsPlayer":
                                 if (this.interruptor==false) {
                                     user1.fichas -= 1
+                                    if (this.checkVictory("X")) {
+                                        console.log("Ha ganado X")
+                                        sessionStorage.setItem("winner", this.user1.namePlayer)
+
+                                        this.getWin()
+                                        break
+                                    }
                                 }
                                 if (this.interruptor==true) {
                                     user2.fichas -= 1
                                     this.validateCPU()
+                                    if (this.checkVictory("O")) {
+                                        console.log("Ha ganado O")
+                                        sessionStorage.setItem("winner", this.user2.namePlayer)
+
+                                        this.getWin()
+                                        break
+                                    }
                                 }
                                 break
 
@@ -121,7 +149,7 @@ class Game {
                                     user1.fichas -= 1
                                     if (this.checkVictory("X")) {
                                         console.log("Ha ganado X")
-                                        sessionStorage.setItem("winner", user1.namePlayer)
+                                        sessionStorage.setItem("winner", this.user1.namePlayer)
 
                                         this.getWin()
                                         break
@@ -132,7 +160,7 @@ class Game {
                                     user2.fichas -= 1
                                     if (this.checkVictory("O")) {
                                         console.log("Ha ganado O")
-                                        sessionStorage.setItem("winner", user2.namePlayer)
+                                        sessionStorage.setItem("winner", this.user2.namePlayer)
 
                                         this.getWin()
                                         break
